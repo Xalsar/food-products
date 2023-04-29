@@ -4,6 +4,7 @@ import Col from "react-bootstrap/Col";
 import ListGroup from "react-bootstrap/ListGroup";
 import Pagination from "react-bootstrap/Pagination";
 import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 
 import useProductsList from "./hooks/use-productsList";
 
@@ -24,6 +25,18 @@ const ProductsList = () => {
     // CATEGORY
     category,
     handleSelectCategory,
+    // MIN - MAX
+    minimum,
+    handleTypeMinimum,
+    maximum,
+    handleTypeMaximum,
+    isMinimumDefined,
+    isMaximumDefined,
+    isMinimumValid,
+    isMaximumValid,
+    isMinimumANumber,
+    isMaximumANumber,
+    isMinMoreThanMax,
   } = useProductsList();
 
   return (
@@ -31,17 +44,56 @@ const ProductsList = () => {
       <Row>
         <Col>
           <Form className="mb-3 mt-3">
-            <Form.Select value={category} onChange={handleSelectCategory}>
-              <option>----</option>
-              <option value="meat">meat</option>
-              <option value="greens">greens</option>
-              <option value="fish">fish</option>
-            </Form.Select>
+            <InputGroup>
+              <Form.Select value={category} onChange={handleSelectCategory}>
+                <option value="">----</option>
+                <option value="meat">meat</option>
+                <option value="greens">greens</option>
+                <option value="fish">fish</option>
+              </Form.Select>
+
+              <Form.Control
+                value={minimum}
+                onChange={handleTypeMinimum}
+                placeholder="Minimum"
+                isInvalid={isMinimumDefined && !isMinimumValid}
+              />
+              <Form.Control
+                value={maximum}
+                onChange={handleTypeMaximum}
+                placeholder="Maximum"
+                isInvalid={isMaximumDefined && !isMaximumValid}
+              />
+            </InputGroup>
+            {isMinimumDefined && !isMinimumANumber && (
+              <Form.Control.Feedback
+                type="invalid"
+                style={{ display: "block" }}
+              >
+                Minimum value shas to be a positive number
+              </Form.Control.Feedback>
+            )}
+            {isMaximumDefined && !isMaximumANumber && (
+              <Form.Control.Feedback
+                type="invalid"
+                style={{ display: "block" }}
+              >
+                Maximum value has to be a positive number
+              </Form.Control.Feedback>
+            )}
+            {isMinMoreThanMax && (
+              <Form.Control.Feedback
+                type="invalid"
+                style={{ display: "block" }}
+              >
+                Minimum can not be greater than maximum
+              </Form.Control.Feedback>
+            )}
           </Form>
 
-          <ListGroup>
+          <ListGroup className={classes.productsList}>
             {itemsToShow.map((item, index) => (
-              <ListGroup.Item key={index} className={classes.productItem}>
+              <ListGroup.Item key={index}>
                 <div>{item.name}</div>
                 <div>{item.category}</div>
                 <div>{item.price}</div>

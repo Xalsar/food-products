@@ -2,19 +2,50 @@ import productsList from "../../../database/db.json";
 
 import { useState } from "react";
 
+import isNumeric from "../../../utils/isNumeric";
+
 const useProductsList = () => {
   const [activePage, setActivePage] = useState(0);
   const [category, setCategory] = useState("");
 
+  const [minimum, setMinimum] = useState("");
+  const [maximum, setMaximum] = useState("");
+
+  const isMinimumDefined = !!minimum;
+  const isMaximumDefined = !!maximum;
+
+  const isMinimumANumber = isNumeric(minimum);
+  const isMaximumANumber = isNumeric(maximum);
+
+  const isMinMoreThanMax =
+    isMinimumDefined && isMaximumDefined && Number(minimum) > Number(maximum);
+
+  const isMinimumValid = isMinimumANumber && !isMinMoreThanMax;
+  const isMaximumValid = isMaximumANumber && !isMinMoreThanMax;
+
+  let filteredProducts = productsList.filter((product) => {
+    if (!!category) {
+      if (product.category !== category) {
+        return false;
+      }
+    }
+
+    if (isMinimumDefined && isMinimumValid) {
+      if (Number(product.price) < Number(minimum)) {
+        return false;
+      }
+    }
+
+    if (isMaximumDefined && isMaximumValid) {
+      if (Number(product.price) > Number(maximum)) {
+        return false;
+      }
+    }
+
+    return true;
+  });
+
   // PAGINATION
-  let filteredProducts = productsList;
-
-  if (!!category) {
-    filteredProducts = filteredProducts.filter(
-      (product) => product.category === category
-    );
-  }
-
   const totalPagesNumber = Math.round(filteredProducts.length / 24);
   const lastPage = totalPagesNumber;
 
@@ -70,6 +101,19 @@ const useProductsList = () => {
     setActivePage(0);
   };
 
+  // MINIMUM - MAXIMUM
+  const handleTypeMinimum = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.currentTarget.value;
+
+    setMinimum(value);
+  };
+
+  const handleTypeMaximum = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.currentTarget.value;
+
+    setMaximum(value);
+  };
+
   return {
     // PAGINATION
     activePage,
@@ -85,6 +129,18 @@ const useProductsList = () => {
     // CATEGORY
     category,
     handleSelectCategory,
+    // MIN - MAX
+    minimum,
+    handleTypeMinimum,
+    maximum,
+    handleTypeMaximum,
+    isMinimumDefined,
+    isMaximumDefined,
+    isMinimumValid,
+    isMaximumValid,
+    isMinimumANumber,
+    isMaximumANumber,
+    isMinMoreThanMax,
   };
 };
 

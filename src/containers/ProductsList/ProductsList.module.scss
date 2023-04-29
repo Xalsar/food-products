@@ -5,8 +5,8 @@
   margin-bottom: 1rem;
 }
 
-.productItem {
-  display: flex;
+.productsList > * {
+  display: flex !important;
 
   & > * {
     &:nth-child(1) {
