@@ -4,12 +4,24 @@ import { useState } from "react";
 
 const useProductsList = () => {
   const [activePage, setActivePage] = useState(0);
+  const [category, setCategory] = useState("");
 
   // PAGINATION
-  const totalPagesNumber = Math.round(productsList.length / 24);
+  let filteredProducts = productsList;
+
+  if (!!category) {
+    filteredProducts = filteredProducts.filter(
+      (product) => product.category === category
+    );
+  }
+
+  const totalPagesNumber = Math.round(filteredProducts.length / 24);
   const lastPage = totalPagesNumber;
 
-  const itemsToShow = productsList.slice(activePage * 24, activePage * 24 + 24);
+  const itemsToShow = filteredProducts.slice(
+    activePage * 24,
+    activePage * 24 + 24
+  );
 
   const checkIfPageIsActive = (targetPage: number) => targetPage === activePage;
   let pagesToShowInPagination = [0, 1, 2, 3, 4];
@@ -51,6 +63,13 @@ const useProductsList = () => {
 
   const handleClickLastPage = () => setActivePage(totalPagesNumber);
 
+  // CATEGORY
+  const handleSelectCategory = (event: React.FormEvent<HTMLSelectElement>) => {
+    const value = event.currentTarget.value;
+    setCategory(value);
+    setActivePage(0);
+  };
+
   return {
     // PAGINATION
     activePage,
@@ -63,6 +82,9 @@ const useProductsList = () => {
     handleClickFirstPage,
     handleClickLastPage,
     lastPage,
+    // CATEGORY
+    category,
+    handleSelectCategory,
   };
 };
 
