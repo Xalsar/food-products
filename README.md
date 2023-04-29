@@ -1,3 +1,32 @@
+# Avaibook Frontend Test
+
+Este repo contiene el código inicial para la prueba, así como la descripción de las tareas. La intención es comprobar como solventas el problema que te planteamos.
+
+- En el repo encontrarás un fichero llamado db.js, con un array de 1000 productos. Está será la "base de datos" con la que trabajarás en la prueba. No necesitas usar ningún servicio de bases datos para la prueba.
+
+- Usamos 3 categorías: <meat, greens, fish> en el fichero db.js, pero siéntete libre de permitir a los usuarios de tu app añadir más categorías si así lo consideras (no se valorará ni mejor ni peor).
+
+## Tareas
+
+1. Los usuarios de la app tienen que poder listar todos los productos, y además:
+
+- Tienen que poder filtrar por categoría, precio máximo y precio mínimo.
+- Se deben mostrar 24 productos por página.
+- No usar librerías para la funcionalidad de paginar.
+
+2. Los usuarios tienen que poder crear productos desde un formulario. El formulario se encontrará en otra ruta distinta a la de la lista de productos. Los productos creados se añadirán a la base de datos de db.js.
+
+3. Si clickas en un producto de la lista, debes retornar los 6 productos con el precio más cercano al seleccionado en la misma categoría.
+
+4. Tienes que crear una NavBar para navegar entre las diferentes páginas del sitio (listado y el formulario de creación de productos)
+
+5. Dotar de estilos a la aplicación para que sea lo más usable posible.
+
+## Opcional
+
+- Mantener la selección en los filtros tras refrescar la página
+- Habilitar una opción que permita limpiar los filtros al mismo tiempo
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
