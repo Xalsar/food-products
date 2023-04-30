@@ -1,10 +1,13 @@
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import ListGroup from "react-bootstrap/ListGroup";
 import Pagination from "react-bootstrap/Pagination";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import ListGroup from "react-bootstrap/ListGroup";
+
+import SimilarProductsModal from "../SimilarProductsModal/SimilarProductsModal";
+import ProductsListGroup from "../../components/ProductsListGroup/ProductsListGroup";
 
 import useProductsList from "./hooks/use-productsList";
 
@@ -37,98 +40,114 @@ const ProductsList = () => {
     isMinimumANumber,
     isMaximumANumber,
     isMinMoreThanMax,
+    // CLICK PRODUCT
+    handleClickProduct,
+    showSimilarProductsModal,
+    productsInRange,
+    handleClickCloseSimilarProductsModal,
   } = useProductsList();
 
   return (
-    <Container>
-      <Row>
-        <Col>
-          <Form className="mb-3 mt-3">
-            <InputGroup>
-              <Form.Select value={category} onChange={handleSelectCategory}>
-                <option value="">----</option>
-                <option value="meat">meat</option>
-                <option value="greens">greens</option>
-                <option value="fish">fish</option>
-              </Form.Select>
+    <>
+      <SimilarProductsModal
+        show={showSimilarProductsModal}
+        handleClose={handleClickCloseSimilarProductsModal}
+        productsInRange={productsInRange}
+      />
+      <Container>
+        <Row>
+          <Col>
+            <Form className="mb-3 mt-3">
+              <InputGroup>
+                <Form.Select value={category} onChange={handleSelectCategory}>
+                  <option value="">----</option>
+                  <option value="meat">meat</option>
+                  <option value="greens">greens</option>
+                  <option value="fish">fish</option>
+                </Form.Select>
 
-              <Form.Control
-                value={minimum}
-                onChange={handleTypeMinimum}
-                placeholder="Minimum"
-                isInvalid={isMinimumDefined && !isMinimumValid}
-              />
-              <Form.Control
-                value={maximum}
-                onChange={handleTypeMaximum}
-                placeholder="Maximum"
-                isInvalid={isMaximumDefined && !isMaximumValid}
-              />
-            </InputGroup>
-            {isMinimumDefined && !isMinimumANumber && (
-              <Form.Control.Feedback
-                type="invalid"
-                style={{ display: "block" }}
-              >
-                Minimum value shas to be a positive number
-              </Form.Control.Feedback>
-            )}
-            {isMaximumDefined && !isMaximumANumber && (
-              <Form.Control.Feedback
-                type="invalid"
-                style={{ display: "block" }}
-              >
-                Maximum value has to be a positive number
-              </Form.Control.Feedback>
-            )}
-            {isMinMoreThanMax && (
-              <Form.Control.Feedback
-                type="invalid"
-                style={{ display: "block" }}
-              >
-                Minimum can not be greater than maximum
-              </Form.Control.Feedback>
-            )}
-          </Form>
-
-          <ListGroup className={classes.productsList}>
-            {itemsToShow.map((item, index) => (
-              <ListGroup.Item key={index}>
-                <div>{item.name}</div>
-                <div>{item.category}</div>
-                <div>{item.price}</div>
-              </ListGroup.Item>
-            ))}
-          </ListGroup>
-
-          <div className={classes.paginationContainer}>
-            <Pagination>
-              <Pagination.First onClick={handleClickFirstPage} />
-              <Pagination.Item onClick={handleClickFirstPage}>
-                {1}
-              </Pagination.Item>
-              <Pagination.Prev onClick={handleClickPrevPage} />
-
-              {pagesToShowInPagination.map((page, index) => (
-                <Pagination.Item
-                  key={index}
-                  active={checkIfPageIsActive(page)}
-                  onClick={() => handleClickChangePage(page)}
+                <Form.Control
+                  value={minimum}
+                  onChange={handleTypeMinimum}
+                  placeholder="Minimum"
+                  isInvalid={isMinimumDefined && !isMinimumValid}
+                />
+                <Form.Control
+                  value={maximum}
+                  onChange={handleTypeMaximum}
+                  placeholder="Maximum"
+                  isInvalid={isMaximumDefined && !isMaximumValid}
+                />
+              </InputGroup>
+              {isMinimumDefined && !isMinimumANumber && (
+                <Form.Control.Feedback
+                  type="invalid"
+                  style={{ display: "block" }}
                 >
-                  {page + 1}
-                </Pagination.Item>
-              ))}
+                  Minimum value shas to be a positive number
+                </Form.Control.Feedback>
+              )}
+              {isMaximumDefined && !isMaximumANumber && (
+                <Form.Control.Feedback
+                  type="invalid"
+                  style={{ display: "block" }}
+                >
+                  Maximum value has to be a positive number
+                </Form.Control.Feedback>
+              )}
+              {isMinMoreThanMax && (
+                <Form.Control.Feedback
+                  type="invalid"
+                  style={{ display: "block" }}
+                >
+                  Minimum can not be greater than maximum
+                </Form.Control.Feedback>
+              )}
+            </Form>
 
-              <Pagination.Next onClick={handleClickNextPage} />
-              <Pagination.Item onClick={handleClickLastPage}>
-                {lastPage + 1}
-              </Pagination.Item>
-              <Pagination.Last onClick={handleClickLastPage} />
-            </Pagination>
-          </div>
-        </Col>
-      </Row>
-    </Container>
+            <ProductsListGroup>
+              {itemsToShow.map((item, index) => (
+                <ListGroup.Item
+                  key={index}
+                  action
+                  onClick={() => handleClickProduct(item.id)}
+                >
+                  <div>{item.name}</div>
+                  <div>{item.category}</div>
+                  <div>{item.price}</div>
+                </ListGroup.Item>
+              ))}
+            </ProductsListGroup>
+
+            <div className={classes.paginationContainer}>
+              <Pagination>
+                <Pagination.First onClick={handleClickFirstPage} />
+                <Pagination.Item onClick={handleClickFirstPage}>
+                  {1}
+                </Pagination.Item>
+                <Pagination.Prev onClick={handleClickPrevPage} />
+
+                {pagesToShowInPagination.map((page, index) => (
+                  <Pagination.Item
+                    key={index}
+                    active={checkIfPageIsActive(page)}
+                    onClick={() => handleClickChangePage(page)}
+                  >
+                    {page + 1}
+                  </Pagination.Item>
+                ))}
+
+                <Pagination.Next onClick={handleClickNextPage} />
+                <Pagination.Item onClick={handleClickLastPage}>
+                  {lastPage + 1}
+                </Pagination.Item>
+                <Pagination.Last onClick={handleClickLastPage} />
+              </Pagination>
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 };
 

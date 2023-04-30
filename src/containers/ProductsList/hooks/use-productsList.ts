@@ -11,6 +11,8 @@ const useProductsList = () => {
   const [minimum, setMinimum] = useState("");
   const [maximum, setMaximum] = useState("");
 
+  const [clickedProductId, setClickedProductId] = useState("");
+
   const isMinimumDefined = !!minimum;
   const isMaximumDefined = !!maximum;
 
@@ -114,6 +116,49 @@ const useProductsList = () => {
     setMaximum(value);
   };
 
+  // CLICK PRODUCT
+  const handleClickProduct = (productId: string) => {
+    setClickedProductId(productId);
+  };
+
+  let productsInRange: any = [];
+
+  if (clickedProductId) {
+    const clickedProduct = productsList.find(
+      (product) => product.id === clickedProductId
+    );
+    const filteredProducts = productsList.filter(
+      (product) =>
+        product.category === clickedProduct?.category &&
+        product.id !== clickedProductId
+    );
+    const sortedProducts = filteredProducts.sort((p1, p2) => {
+      const difference1 = Math.abs(
+        Number(p1.price) - Number(clickedProduct?.price)
+      );
+
+      const difference2 = Math.abs(
+        Number(p2.price) - Number(clickedProduct?.price)
+      );
+
+      if (difference1 > difference2) {
+        return 1;
+      } else if (difference1 < difference2) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
+
+    productsInRange = sortedProducts.splice(0, 6);
+  }
+
+  const showSimilarProductsModal = !!clickedProductId;
+
+  const handleClickCloseSimilarProductsModal = () => {
+    setClickedProductId("");
+  };
+
   return {
     // PAGINATION
     activePage,
@@ -141,6 +186,11 @@ const useProductsList = () => {
     isMinimumANumber,
     isMaximumANumber,
     isMinMoreThanMax,
+    // CLICK PRODUCT
+    handleClickProduct,
+    showSimilarProductsModal,
+    productsInRange,
+    handleClickCloseSimilarProductsModal,
   };
 };
 
