@@ -11,48 +11,75 @@ import ListGroup from "react-bootstrap/ListGroup";
 import SimilarProductsModal from "../SimilarProductsModal/SimilarProductsModal";
 import ProductsListGroup from "../../components/ProductsListGroup/ProductsListGroup";
 
-import useProductsList from "./hooks/use-productsList";
-
 import classes from "./ProductsList.module.scss";
 
 type Props = {
-  productsList: Product[];
+  // PAGINATION
+  itemsToShow: Product[];
+  checkIfPageIsActive: (page: number) => boolean;
+  pagesToShowInPagination: number[];
+  handleClickChangePage: (page: number) => void;
+  handleClickPrevPage: () => void;
+  handleClickNextPage: () => void;
+  handleClickFirstPage: () => void;
+  handleClickLastPage: () => void;
+  lastPage: number;
+  // CATEGORY
+  category: string;
+  handleSelectCategory: (
+    selectEvent: React.FormEvent<HTMLSelectElement>
+  ) => void;
+  // MIN - MAX
+  minimum: string;
+  handleTypeMinimum: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  maximum: string;
+  handleTypeMaximum: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  isMinimumDefined: boolean;
+  isMaximumDefined: boolean;
+  isMinimumValid: boolean;
+  isMaximumValid: boolean;
+  isMinimumANumber: boolean;
+  isMaximumANumber: boolean;
+  isMinMoreThanMax: boolean;
+  // CLICK PRODUCT
+  handleClickProduct: (productId: string) => void;
+  showSimilarProductsModal: boolean;
+  productsInRange: Product[];
+  handleClickCloseSimilarProductsModal: () => void;
 };
 
-const ProductsList = ({ productsList }: Props) => {
-  const {
-    // PAGINATION
-    itemsToShow,
-    checkIfPageIsActive,
-    pagesToShowInPagination,
-    handleClickChangePage,
-    handleClickPrevPage,
-    handleClickNextPage,
-    handleClickFirstPage,
-    handleClickLastPage,
-    lastPage,
-    // CATEGORY
-    category,
-    handleSelectCategory,
-    // MIN - MAX
-    minimum,
-    handleTypeMinimum,
-    maximum,
-    handleTypeMaximum,
-    isMinimumDefined,
-    isMaximumDefined,
-    isMinimumValid,
-    isMaximumValid,
-    isMinimumANumber,
-    isMaximumANumber,
-    isMinMoreThanMax,
-    // CLICK PRODUCT
-    handleClickProduct,
-    showSimilarProductsModal,
-    productsInRange,
-    handleClickCloseSimilarProductsModal,
-  } = useProductsList(productsList);
-
+const ProductsList = ({
+  // PAGINATION
+  itemsToShow,
+  checkIfPageIsActive,
+  pagesToShowInPagination,
+  handleClickChangePage,
+  handleClickPrevPage,
+  handleClickNextPage,
+  handleClickFirstPage,
+  handleClickLastPage,
+  lastPage,
+  // CATEGORY
+  category,
+  handleSelectCategory,
+  // MIN - MAX
+  minimum,
+  handleTypeMinimum,
+  maximum,
+  handleTypeMaximum,
+  isMinimumDefined,
+  isMaximumDefined,
+  isMinimumValid,
+  isMaximumValid,
+  isMinimumANumber,
+  isMaximumANumber,
+  isMinMoreThanMax,
+  // CLICK PRODUCT
+  handleClickProduct,
+  showSimilarProductsModal,
+  productsInRange,
+  handleClickCloseSimilarProductsModal,
+}: Props) => {
   return (
     <>
       <SimilarProductsModal

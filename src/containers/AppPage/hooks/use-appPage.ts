@@ -1,16 +1,12 @@
 import dbProductsList from "../../../database/db.json";
 
+import ProductData from "../../../types/ProductData";
+
 import Product from "../../../types/Product";
 
 import { useState } from "react";
 
 import uid from "../../../utils/uid";
-
-type ProductData = {
-  name: string;
-  price: number;
-  category: string;
-};
 
 const useAppPage = () => {
   const [productsList, setProductsList] = useState<Product[]>(dbProductsList);

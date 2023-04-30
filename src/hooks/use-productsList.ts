@@ -1,8 +1,8 @@
-import Product from "../../../types/Product";
+import Product from "../types/Product";
 
 import { useState } from "react";
 
-import isNumeric from "../../../utils/isNumeric";
+import isNumeric from "../utils/isNumeric";
 
 const useProductsList = (productsList: Product[]) => {
   const [activePage, setActivePage] = useState(0);

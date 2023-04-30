@@ -4,27 +4,41 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-import useCreateProduct from "./hooks/use-createProduct";
+type Props = {
+  // VALUES
+  name: string;
+  handleTypeName: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  category: string;
+  handleSelectCategory: (event: React.FormEvent<HTMLSelectElement>) => void;
+  price: string;
+  handleTypePrice: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  // SUBMIT
+  hasSubmittedForm: boolean;
+  handleSubmitForm: (event: React.FormEvent<EventTarget>) => void;
+  isNameValid: boolean;
+  isPriceValid: boolean;
+  nameErrorMessage: string;
+  priceErrorMessage: string;
+  isFormValid: boolean;
+};
 
-const CreateProduct = () => {
-  const {
-    // VALUES
-    name,
-    handleTypeName,
-    category,
-    handleSelectCategory,
-    price,
-    handleTypePrice,
-    // SUBMIT
-    hasSubmittedForm,
-    handleSubmitForm,
-    isNameValid,
-    isPriceValid,
-    nameErrorMessage,
-    priceErrorMessage,
-    isFormValid,
-  } = useCreateProduct();
-
+const CreateProduct = ({
+  // VALUES
+  name,
+  handleTypeName,
+  category,
+  handleSelectCategory,
+  price,
+  handleTypePrice,
+  // SUBMIT
+  hasSubmittedForm,
+  handleSubmitForm,
+  isNameValid,
+  isPriceValid,
+  nameErrorMessage,
+  priceErrorMessage,
+  isFormValid,
+}: Props) => {
   return (
     <Container>
       <Form onSubmit={handleSubmitForm}>

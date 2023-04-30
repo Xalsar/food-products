@@ -1,14 +1,21 @@
+import ProductData from "../types/ProductData";
+
 import { useState } from "react";
 
-import isNumeric from "../../../utils/isNumeric";
+import { toast } from "react-toastify";
 
-const useCreateProduct = () => {
+import isNumeric from "../utils/isNumeric";
+
+const useCreateProduct = (
+  addProductToList: (productData: ProductData) => void
+) => {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("greens");
   const [price, setPrice] = useState("");
 
   const [hasSubmittedForm, setHasSubmittedForm] = useState(false);
 
+  // GET DATA
   const handleTypeName = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.currentTarget.value;
 
@@ -40,7 +47,7 @@ const useCreateProduct = () => {
   if (!irPriceSpecified) {
     priceErrorMessage = "Price is required";
   } else if (!isPriceANumber) {
-    priceErrorMessage = "Price must be an positive number (ex: 1, 35, 45.5...)";
+    priceErrorMessage = "Price must be a positive number (ex: 1, 35, 45.5...)";
   }
 
   //  FORM VALIDATION
@@ -56,6 +63,15 @@ const useCreateProduct = () => {
       setCategory("");
       setPrice("");
       setHasSubmittedForm(false);
+
+      addProductToList({ name, category, price: Number(price) });
+
+      toast.success(
+        "The product has been created. Go to products list to see it.",
+        {
+          position: "bottom-left",
+        }
+      );
     }
   };
 
