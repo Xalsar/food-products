@@ -1,6 +1,6 @@
 import Product from "../types/Product";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import isNumeric from "../utils/isNumeric";
 
@@ -13,6 +13,29 @@ const useProductsList = (productsList: Product[]) => {
 
   const [clickedProductId, setClickedProductId] = useState("");
 
+  // LOAD FILTERS
+  useEffect(() => {
+    const localStorageData = {
+      category: localStorage.getItem("category"),
+      minimum: localStorage.getItem("minimum"),
+      maximum: localStorage.getItem("maximum"),
+    };
+
+    if (localStorageData.category) {
+      setCategory(localStorageData.category);
+    }
+
+    if (localStorageData.minimum) {
+      setMinimum(localStorageData.minimum);
+    }
+
+    if (localStorageData.maximum) {
+      setMaximum(localStorageData.maximum);
+    }
+  }, []);
+
+  // VALIDATION
+  const isCategoryDefined = category.length > 0;
   // MINIMUM MAXIMUM VALIDATION
   const isMinimumDefined = !!minimum;
   const isMaximumDefined = !!maximum;
@@ -99,6 +122,8 @@ const useProductsList = (productsList: Product[]) => {
     const value = event.currentTarget.value;
     setCategory(value);
     setActivePage(0);
+
+    localStorage.setItem("category", value);
   };
 
   // MINIMUM - MAXIMUM
@@ -107,6 +132,7 @@ const useProductsList = (productsList: Product[]) => {
 
     setActivePage(0);
     setMinimum(value);
+    localStorage.setItem("minimum", value);
   };
 
   const handleTypeMaximum = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -114,6 +140,7 @@ const useProductsList = (productsList: Product[]) => {
 
     setActivePage(0);
     setMaximum(value);
+    localStorage.setItem("maximum", value);
   };
 
   // CLICK PRODUCT
@@ -159,6 +186,20 @@ const useProductsList = (productsList: Product[]) => {
     setClickedProductId("");
   };
 
+  // CLEAR FILTERS
+  const areFilteresSelected =
+    isCategoryDefined || isMinimumDefined || isMaximumDefined;
+
+  const handleClickClearFilters = () => {
+    setCategory("");
+    setMinimum("");
+    setMaximum("");
+
+    localStorage.setItem("category", "");
+    localStorage.setItem("minimum", "");
+    localStorage.setItem("maximum", "");
+  };
+
   return {
     // PAGINATION
     activePage,
@@ -191,6 +232,9 @@ const useProductsList = (productsList: Product[]) => {
     showSimilarProductsModal,
     productsInRange,
     handleClickCloseSimilarProductsModal,
+    // CLEAR FILTERS
+    areFilteresSelected,
+    handleClickClearFilters,
   };
 };
 

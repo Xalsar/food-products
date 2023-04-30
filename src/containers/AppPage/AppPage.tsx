@@ -14,7 +14,7 @@ import useCreateProduct from "../../hooks/use-createProduct";
 function AppPage() {
   const { productsList, addProductToList } = useAppPage();
 
-  const productsListhook = useProductsList(productsList);
+  const productsListHook = useProductsList(productsList);
   const createProductHook = useCreateProduct(addProductToList);
 
   return (
@@ -26,7 +26,7 @@ function AppPage() {
           element={(() => (
             <ProductsList
               // PAGINATION
-              {...productsListhook}
+              {...productsListHook}
             />
           ))()}
         />

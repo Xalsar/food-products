@@ -7,6 +7,7 @@ import Pagination from "react-bootstrap/Pagination";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import ListGroup from "react-bootstrap/ListGroup";
+import Button from "react-bootstrap/Button";
 
 import SimilarProductsModal from "../SimilarProductsModal/SimilarProductsModal";
 import ProductsListGroup from "../../components/ProductsListGroup/ProductsListGroup";
@@ -46,6 +47,9 @@ type Props = {
   showSimilarProductsModal: boolean;
   productsInRange: Product[];
   handleClickCloseSimilarProductsModal: () => void;
+  // CLEAR FILTERS
+  areFilteresSelected: boolean;
+  handleClickClearFilters: () => void;
 };
 
 const ProductsList = ({
@@ -79,6 +83,9 @@ const ProductsList = ({
   showSimilarProductsModal,
   productsInRange,
   handleClickCloseSimilarProductsModal,
+  // CLEAR FILTERS
+  areFilteresSelected,
+  handleClickClearFilters,
 }: Props) => {
   return (
     <>
@@ -90,6 +97,10 @@ const ProductsList = ({
       <Container>
         <Row>
           <Col>
+            {areFilteresSelected && (
+              <Button onClick={handleClickClearFilters}>Clear filters</Button>
+            )}
+
             <Form className="mb-3 mt-3">
               <InputGroup>
                 <Form.Select value={category} onChange={handleSelectCategory}>
