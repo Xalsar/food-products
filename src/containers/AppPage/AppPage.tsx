@@ -24,10 +24,7 @@ function AppPage() {
         <Route
           path="/"
           element={(() => (
-            <ProductsList
-              // PAGINATION
-              {...productsListHook}
-            />
+            <ProductsList {...productsListHook} />
           ))()}
         />
         <Route
