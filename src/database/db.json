@@ -6003,60 +6003,60 @@
     "id": "59ed0d72-91e8-4b98-856f-493340da9ffb",
     "name": "aa",
     "category": "greens",
-    "price": "123"
+    "price": 123
   },
   {
     "id": "d3c97366-b640-4401-91d6-f0c828510f0f",
     "name": "aa",
     "category": "greens",
-    "price": "123"
+    "price": 123
   },
   {
     "id": "98c8cba2-9b56-468e-bbd6-b06896f5020d",
     "name": "search1",
     "category": "meat",
-    "price": "1"
+    "price": 1
   },
   {
     "id": "2644eed3-ba0a-48ee-a526-9b95237c086b",
     "name": "search1",
     "category": "meat",
-    "price": "1"
+    "price": 1
   },
   {
     "id": "121c62ae-a8fc-45d7-8aff-7c1b5ed8df34",
     "name": "a",
     "category": "meat",
-    "price": "1"
+    "price": 1
   },
   {
     "id": "8d501976-89cd-4d7e-ac64-f6a3fbbc8718",
     "name": "a",
     "category": "meat",
-    "price": "1"
+    "price": 1
   },
   {
     "id": "2a2132fd-8467-4725-b0a0-ec4b0dc35f56",
     "name": "blackfin tuna",
     "category": "meat",
-    "price": "23"
+    "price": 23
   },
   {
     "id": "692854a7-15cc-4e72-8e51-1dff339dedcb",
     "name": "blackfin tuna",
     "category": "meat",
-    "price": "23"
+    "price": 23
   },
   {
     "id": "8ac84aef-3ce0-4345-84d9-bea1b905d4d9",
     "name": "adfas",
     "category": "meat",
-    "price": "0123"
+    "price": 123
   },
   {
     "id": "99fc18f4-b667-47b7-9ba2-89a68f43123d",
     "name": "adfas",
     "category": "meat",
-    "price": "0123"
+    "price": 123
   }
 ]

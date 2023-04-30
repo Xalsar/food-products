@@ -1,3 +1,5 @@
+import Product from "../../types/Product";
+
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -13,7 +15,11 @@ import useProductsList from "./hooks/use-productsList";
 
 import classes from "./ProductsList.module.scss";
 
-const ProductsList = () => {
+type Props = {
+  productsList: Product[];
+};
+
+const ProductsList = ({ productsList }: Props) => {
   const {
     // PAGINATION
     itemsToShow,
@@ -45,7 +51,7 @@ const ProductsList = () => {
     showSimilarProductsModal,
     productsInRange,
     handleClickCloseSimilarProductsModal,
-  } = useProductsList();
+  } = useProductsList(productsList);
 
   return (
     <>

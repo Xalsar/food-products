@@ -47,7 +47,6 @@ const CreateProduct = () => {
           <Form.Group as={Col} controlId="product.category">
             <Form.Label>Category</Form.Label>
             <Form.Select
-              defaultValue="greens"
               value={category}
               onChange={handleSelectCategory}
               isValid={hasSubmittedForm}

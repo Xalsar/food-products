@@ -4,7 +4,7 @@ import isNumeric from "../../../utils/isNumeric";
 
 const useCreateProduct = () => {
   const [name, setName] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState("greens");
   const [price, setPrice] = useState("");
 
   const [hasSubmittedForm, setHasSubmittedForm] = useState(false);

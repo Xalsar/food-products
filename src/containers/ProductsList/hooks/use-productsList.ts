@@ -1,10 +1,10 @@
-import productsList from "../../../database/db.json";
+import Product from "../../../types/Product";
 
 import { useState } from "react";
 
 import isNumeric from "../../../utils/isNumeric";
 
-const useProductsList = () => {
+const useProductsList = (productsList: Product[]) => {
   const [activePage, setActivePage] = useState(0);
   const [category, setCategory] = useState("");
 
