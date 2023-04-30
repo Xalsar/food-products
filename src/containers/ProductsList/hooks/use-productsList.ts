@@ -13,6 +13,7 @@ const useProductsList = () => {
 
   const [clickedProductId, setClickedProductId] = useState("");
 
+  // MINIMUM MAXIMUM VALIDATION
   const isMinimumDefined = !!minimum;
   const isMaximumDefined = !!maximum;
 
@@ -25,6 +26,7 @@ const useProductsList = () => {
   const isMinimumValid = isMinimumANumber && !isMinMoreThanMax;
   const isMaximumValid = isMaximumANumber && !isMinMoreThanMax;
 
+  // FILTERING
   let filteredProducts = productsList.filter((product) => {
     if (!!category) {
       if (product.category !== category) {
@@ -48,8 +50,8 @@ const useProductsList = () => {
   });
 
   // PAGINATION
-  const totalPagesNumber = Math.round(filteredProducts.length / 24);
-  const lastPage = totalPagesNumber;
+  const totalPagesNumber = Math.ceil(filteredProducts.length / 24);
+  const lastPage = totalPagesNumber - 1;
 
   const itemsToShow = filteredProducts.slice(
     activePage * 24,
@@ -57,24 +59,20 @@ const useProductsList = () => {
   );
 
   const checkIfPageIsActive = (targetPage: number) => targetPage === activePage;
-  let pagesToShowInPagination = [0, 1, 2, 3, 4];
 
-  if (activePage > totalPagesNumber - 5) {
-    pagesToShowInPagination = [
-      totalPagesNumber - 4,
-      totalPagesNumber - 3,
-      totalPagesNumber - 2,
-      totalPagesNumber - 1,
-      totalPagesNumber,
-    ];
-  } else if (activePage > 3) {
-    pagesToShowInPagination = [
-      activePage - 2,
-      activePage - 1,
-      activePage,
-      activePage + 1,
-      activePage + 2,
-    ];
+  const pagesList = Array.from(Array(totalPagesNumber).keys());
+
+  let pagesToShowInPagination: number[] = [];
+
+  if (activePage < 3 || totalPagesNumber < 3) {
+    pagesToShowInPagination = pagesList.slice(0, 5);
+  } else if (activePage > totalPagesNumber - 5) {
+    pagesToShowInPagination = pagesList.slice(
+      totalPagesNumber - 5,
+      totalPagesNumber + 1
+    );
+  } else {
+    pagesToShowInPagination = pagesList.slice(activePage - 2, activePage + 3);
   }
 
   const handleClickChangePage = (clickedPage: number) =>
@@ -94,7 +92,7 @@ const useProductsList = () => {
 
   const handleClickFirstPage = () => setActivePage(0);
 
-  const handleClickLastPage = () => setActivePage(totalPagesNumber);
+  const handleClickLastPage = () => setActivePage(lastPage);
 
   // CATEGORY
   const handleSelectCategory = (event: React.FormEvent<HTMLSelectElement>) => {
@@ -107,12 +105,14 @@ const useProductsList = () => {
   const handleTypeMinimum = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.currentTarget.value;
 
+    setActivePage(0);
     setMinimum(value);
   };
 
   const handleTypeMaximum = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.currentTarget.value;
 
+    setActivePage(0);
     setMaximum(value);
   };
 
