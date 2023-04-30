@@ -6,6 +6,8 @@ import ListGroup from "react-bootstrap/ListGroup";
 
 import ProductsListGroup from "../../components/ProductsListGroup/ProductsListGroup";
 
+import useSimilarProductModal from "./hooks/use-similarProductModal";
+
 type Props = {
   show: boolean;
   handleClose: () => void;
@@ -15,8 +17,10 @@ type Props = {
 const SimilarProductsModal = ({
   show,
   handleClose,
-  productsInRange,
+  productsInRange: productsListToLoad,
 }: Props) => {
+  const productsClosePriceList = useSimilarProductModal(productsListToLoad);
+
   return (
     <Modal size="lg" show={show} onHide={handleClose}>
       <Modal.Header closeButton>
@@ -26,7 +30,7 @@ const SimilarProductsModal = ({
       </Modal.Header>
       <Modal.Body>
         <ProductsListGroup>
-          {productsInRange.map((item, index) => (
+          {productsClosePriceList.map((item: Product, index: number) => (
             <ListGroup.Item key={index}>
               <div>{item.name}</div>
               <div>{item.category}</div>
